@@ -2,6 +2,11 @@
 #define SCALARCONVERTER_HPP
 
 #include <iostream>
+#include <string>
+#include <cstdlib>
+#include <cstdio>
+#include <sstream>
+#include <vector>
 
 class ScalarConverter{
 private:
@@ -15,5 +20,7 @@ public:
 
 	~ScalarConverter();
 };
+
+void	singleCharConvert(std:: string);
 
 #endif

@@ -2,8 +2,8 @@ NAME = Serializer
 CPP= c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98 -g3
 
-SRCS = main.cpp Serializer.cpp
-INCS = Serializer.hpp
+SRCS = main.cpp Serializer.cpp Data.cpp
+INCS = Serializer.hpp Data.hpp
 
 $(NAME): $(SRCS) $(INCS) Makefile
 	$(CPP) $(CFLAGS) $(SRCS) -o $(NAME)

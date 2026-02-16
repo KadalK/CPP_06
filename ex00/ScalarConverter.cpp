@@ -4,13 +4,15 @@
 #include <limits>
 #include <cmath>
 
-ScalarConverter::ScalarConverter() : _char('\0') {}
+ScalarConverter::ScalarConverter() {}
 
-ScalarConverter::ScalarConverter(ScalarConverter& copy) : _char(copy._char) {}
+ScalarConverter::ScalarConverter(ScalarConverter& copy) {
+	*this = copy;
+}
 
 ScalarConverter& ScalarConverter::operator=(ScalarConverter& rhs){
 	if (this != &rhs)
-		this->_char = rhs._char;
+		return *this;
 	return *this;
 }
 
@@ -44,16 +46,47 @@ void	stringIntConvert(char *endPtr, double res)
 		std::cout << "int: impossible " << std::endl;
 }
 
-void	stringFloatConvert(char *endPtr, double res)
+void	stringFloatConvert(char *endPtr, double res, std::string type)
 {
+	if (type == "+inf")
+	{
+		std::cout << "float: +inf" << std::endl;
+		return;
+	}
+	if (type == "-inf")
+	{
+		std::cout << "float: -inf" << std::endl;
+		return;
+	}
+	if (type == "nan")
+	{
+		std::cout << "float: nanf" << std::endl;
+		return ;
+	}
 	if (!*endPtr && (res >= -std::numeric_limits<float>::max() && res < std::numeric_limits<float>::max()))
 		std::cout << "float: " << static_cast<float>(res) << "f" << std::endl;
 	else
-		std::cout << "float: " << " impossible " << std::endl;
+		std::cout << "float: impossible " << std::endl;
 
 }
-void	stringDoubleConvert(char *endPtr, double res)
+void	stringDoubleConvert(char *endPtr, double res, std::string type)
 {
+	if (type == "+inf")
+	{
+		std::cout << "double: +inf" << std::endl;
+		return;
+	}
+	if (type == "-inf")
+	{
+		std::cout << "double: -inf" << std::endl;
+		return;
+	}
+
+	if (type == "nan")
+	{
+		std::cout << "double: nan" << std::endl;
+		return;
+	}
 	if (!*endPtr && (res >= std::numeric_limits<double>::min() && res < std::numeric_limits<double>::max()))
 		std::cout << "double: " << static_cast<double>(res) << std::endl;
 	else
@@ -76,12 +109,12 @@ void	stringConvert(std:: string type, double res)
 {
 	char *endPtr;
 
-
 	res = std::strtod(type.c_str(), &endPtr);
+	setFlag(endPtr, res);
 	stringCharConvert(endPtr, res);
 	stringIntConvert(endPtr, res);
-	stringFloatConvert(endPtr, res);
-	stringDoubleConvert(endPtr, res);
+	stringFloatConvert(endPtr, res, type);
+	stringDoubleConvert(endPtr, res, type);
 }
 
 void	ScalarConverter::convert(std::string type){

@@ -1,4 +1,4 @@
-NAME = scalar
+NAME = Scalar
 CPP= c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98 -g3
 

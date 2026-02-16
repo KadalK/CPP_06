@@ -9,8 +9,6 @@
 #include <vector>
 
 class ScalarConverter{
-private:
-	char _char;
 public:
 	ScalarConverter();
 	ScalarConverter(ScalarConverter& );

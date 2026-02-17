@@ -48,20 +48,13 @@ void	stringIntConvert(char *endPtr, double res)
 
 void	stringFloatConvert(char *endPtr, double res, std::string type)
 {
-	if (type == "+inf")
+	float conv;
+	std::string tmp = type;
+	conv = std::strtof(tmp.c_str(), &endPtr);
+	if (std::strtof(tmp.c_str(), &endPtr))
 	{
-		std::cout << "float: +inf" << std::endl;
+		std::cout << "float: " << conv << "f" << std::endl;
 		return;
-	}
-	if (type == "-inf")
-	{
-		std::cout << "float: -inf" << std::endl;
-		return;
-	}
-	if (type == "nan")
-	{
-		std::cout << "float: nanf" << std::endl;
-		return ;
 	}
 	if (!*endPtr && (res >= -std::numeric_limits<float>::max() && res < std::numeric_limits<float>::max()))
 		std::cout << "float: " << static_cast<float>(res) << "f" << std::endl;
@@ -71,23 +64,9 @@ void	stringFloatConvert(char *endPtr, double res, std::string type)
 }
 void	stringDoubleConvert(char *endPtr, double res, std::string type)
 {
-	if (type == "+inf")
-	{
-		std::cout << "double: +inf" << std::endl;
-		return;
-	}
-	if (type == "-inf")
-	{
-		std::cout << "double: -inf" << std::endl;
-		return;
-	}
-
-	if (type == "nan")
-	{
-		std::cout << "double: nan" << std::endl;
-		return;
-	}
-	if (!*endPtr && (res >= std::numeric_limits<double>::min() && res < std::numeric_limits<double>::max()))
+	if (res == strtod("+inf", NULL) || res == strtod("-inf", NULL) || type == "nan" || type == "nanf")
+		std::cout << "double: " << res << std::endl;
+	else if (!*endPtr && (res >= std::numeric_limits<double>::min() && res < std::numeric_limits<double>::max()))
 		std::cout << "double: " << static_cast<double>(res) << std::endl;
 	else
 		std::cout << "double: " << " impossible " << std::endl;
@@ -105,12 +84,13 @@ void	setFlag(char *endPtr, double res)
 }
 
 
-void	stringConvert(std:: string type, double res)
+void	stringConvert(std::string type, double res)
 {
 	char *endPtr;
 
 	res = std::strtod(type.c_str(), &endPtr);
-	setFlag(endPtr, res);
+	if (type != "nan" && type != "nanf")
+		setFlag(endPtr, res);
 	stringCharConvert(endPtr, res);
 	stringIntConvert(endPtr, res);
 	stringFloatConvert(endPtr, res, type);

@@ -2,16 +2,18 @@
 #include "Data.hpp"
 #include <iostream>
 
+
+
 int main()
 {
 	Data();
 	Serializer();
 
-	uintptr_t ptr = 422;
-	Serializer *serial = 0;
-	Data *data = 0;
+	Data *data = new Data("prout", 42);
 
-	std::cout << serial->serialize(data) << std::endl;
-	std::cout << serial->deserialize(ptr) << std::endl;
+	uintptr_t ptr = Serializer::serialize(data);
+	Data *serialized = Serializer::deserialize(ptr);
+	std::cout << serialized->getString() << std::endl;
+	std::cout << serialized->getNum() << std::endl;
 
 }

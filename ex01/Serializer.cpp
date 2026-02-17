@@ -1,6 +1,7 @@
 #include "Serializer.hpp"
 
 Serializer::Serializer(){}
+
 Serializer::Serializer(Serializer& copy){
 	*this = copy;
 }

@@ -1,11 +1,12 @@
-#ifdef BASE_HPP
+#ifndef BASE_HPP
 #define BASE_HPP
-
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
 
 class Base {
 public:
 	Base();
-	void identify(Base* p);
 	virtual ~Base();
 };
 

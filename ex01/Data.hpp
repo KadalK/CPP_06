@@ -14,7 +14,7 @@ public:
 	Data& operator=(Data& );
 
 	std::string	getString();
-	int	getNum();
+	int			getNum();
 
 	~Data();
 };

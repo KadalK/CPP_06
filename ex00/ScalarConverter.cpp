@@ -25,8 +25,7 @@ void	charConvert(std:: string type, int toInt){
 }
 
 
-void	stringCharConvert(char *endPtr, double res)
-{
+void	stringCharConvert(char *endPtr, double res){
 	if (!*endPtr && (res >= std::numeric_limits<unsigned char>::min() && res <= std::numeric_limits<unsigned char>::max()))
 	{
 		if (res >= 32 && res < 127)
@@ -46,9 +45,8 @@ void	stringIntConvert(char *endPtr, double res)
 		std::cout << "int: impossible " << std::endl;
 }
 
-void	stringFloatConvert(char *endPtr, double res, std::string type)
-{
-	float conv;
+void	stringFloatConvert(char *endPtr, double res, std::string type){
+	float	conv;
 	std::string tmp = type;
 	conv = std::strtof(tmp.c_str(), &endPtr);
 	if (std::strtof(tmp.c_str(), &endPtr))
@@ -60,10 +58,9 @@ void	stringFloatConvert(char *endPtr, double res, std::string type)
 		std::cout << "float: " << static_cast<float>(res) << "f" << std::endl;
 	else
 		std::cout << "float: impossible " << std::endl;
-
 }
-void	stringDoubleConvert(char *endPtr, double res, std::string type)
-{
+
+void	stringDoubleConvert(char *endPtr, double res, std::string type){
 	if (res == strtod("+inf", NULL) || res == strtod("-inf", NULL) || type == "nan" || type == "nanf")
 		std::cout << "double: " << res << std::endl;
 	else if (!*endPtr && (res >= std::numeric_limits<double>::min() && res < std::numeric_limits<double>::max()))
@@ -72,8 +69,7 @@ void	stringDoubleConvert(char *endPtr, double res, std::string type)
 		std::cout << "double: " << " impossible " << std::endl;
 }
 
-void	setFlag(char *endPtr, double res)
-{
+void	setFlag(char *endPtr, double res){
 	bool precisionFlag = false;
 	if (*endPtr == 'f' && !endPtr[1])
 		*endPtr = 0;
@@ -83,9 +79,7 @@ void	setFlag(char *endPtr, double res)
 		std::cout << std::fixed << std::setprecision(1);
 }
 
-
-void	stringConvert(std::string type, double res)
-{
+void	stringConvert(std::string type, double res){
 	char *endPtr;
 
 	res = std::strtod(type.c_str(), &endPtr);

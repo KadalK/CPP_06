@@ -6,9 +6,6 @@
 
 class Data;
 
-
-//notion : reinterpret_cast
-
 class Serializer{
 public:
 	Serializer();
@@ -20,7 +17,6 @@ public:
 	static Data* deserialize(uintptr_t raw);
 
 	~Serializer();
-
 };
 
 #endif

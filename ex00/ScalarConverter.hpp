@@ -19,6 +19,6 @@ public:
 	~ScalarConverter();
 };
 
-void	singleCharConvert(std:: string);
+//void	singleCharConvert(std:: string);
 
 #endif

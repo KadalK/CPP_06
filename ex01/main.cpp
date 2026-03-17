@@ -2,8 +2,6 @@
 #include "Data.hpp"
 #include <iostream>
 
-
-
 int main()
 {
 	Data();
@@ -15,5 +13,4 @@ int main()
 	Data *serialized = Serializer::deserialize(ptr);
 	std::cout << serialized->getString() << std::endl;
 	std::cout << serialized->getNum() << std::endl;
-
 }

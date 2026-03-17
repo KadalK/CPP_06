@@ -1,6 +1,6 @@
 NAME = Base
 CPP= c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98 -g3
+CFLAGS = -Wall -Wextra -Werror -std=c++98
 
 SRCS = main.cpp A.cpp B.cpp C.cpp Base.cpp
 INCS = A.hpp B.hpp C.hpp Base.hpp

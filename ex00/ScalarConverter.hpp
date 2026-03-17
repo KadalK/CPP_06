@@ -9,16 +9,15 @@
 #include <vector>
 
 class ScalarConverter{
-public:
+private:
 	ScalarConverter();
 	ScalarConverter(ScalarConverter& );
+public:
 	ScalarConverter& operator=(ScalarConverter& );
 
 	static void	convert(std::string );
 
 	~ScalarConverter();
 };
-
-//void	singleCharConvert(std:: string);
 
 #endif

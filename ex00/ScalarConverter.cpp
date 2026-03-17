@@ -39,7 +39,7 @@ void	stringCharConvert(char *endPtr, double res){
 
 void	stringIntConvert(char *endPtr, double res)
 {
-	if (!*endPtr && (res >= std::numeric_limits<int>::min() && res < std::numeric_limits<int>::max()))
+	if (!*endPtr && (res >= std::numeric_limits<int>::min() && res <= std::numeric_limits<int>::max()))
 		std::cout << "int: " << static_cast<int>(res) << std::endl;
 	else
 		std::cout << "int: impossible " << std::endl;
@@ -54,7 +54,7 @@ void	stringFloatConvert(char *endPtr, double res, std::string type){
 		std::cout << "float: " << conv << "f" << std::endl;
 		return;
 	}
-	if (!*endPtr && (res >= -std::numeric_limits<float>::max() && res < std::numeric_limits<float>::max()))
+	if (!*endPtr && (res >= -std::numeric_limits<float>::max() && res <= std::numeric_limits<float>::max()))
 		std::cout << "float: " << static_cast<float>(res) << "f" << std::endl;
 	else
 		std::cout << "float: impossible " << std::endl;
@@ -63,7 +63,7 @@ void	stringFloatConvert(char *endPtr, double res, std::string type){
 void	stringDoubleConvert(char *endPtr, double res, std::string type){
 	if (res == strtod("+inf", NULL) || res == strtod("-inf", NULL) || type == "nan" || type == "nanf")
 		std::cout << "double: " << res << std::endl;
-	else if (!*endPtr && (res >= std::numeric_limits<double>::min() && res < std::numeric_limits<double>::max()))
+	else if (!*endPtr && (res >= std::numeric_limits<double>::min() && res <= std::numeric_limits<double>::max()))
 		std::cout << "double: " << static_cast<double>(res) << std::endl;
 	else
 		std::cout << "double: " << " impossible " << std::endl;

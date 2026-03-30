@@ -8,7 +8,7 @@ Data::Data(Data& copy) {
 	*this = copy;
 }
 
-Data& Data::operator=(Data& rhs) {
+Data& Data::operator=(const Data& rhs) {
 	if (this != &rhs)
 		*this = rhs;
 	return *this;

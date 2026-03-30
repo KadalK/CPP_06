@@ -13,7 +13,7 @@ private:
 	ScalarConverter();
 	ScalarConverter(ScalarConverter& );
 public:
-	ScalarConverter& operator=(ScalarConverter& );
+	ScalarConverter& operator=(const ScalarConverter& );
 
 	static void	convert(std::string );
 

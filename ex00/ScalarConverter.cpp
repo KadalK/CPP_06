@@ -10,9 +10,7 @@ ScalarConverter::ScalarConverter(ScalarConverter& copy) {
 	*this = copy;
 }
 
-ScalarConverter& ScalarConverter::operator=(ScalarConverter& rhs){
-	if (this != &rhs)
-		return *this;
+ScalarConverter& ScalarConverter::operator=(const ScalarConverter& rhs){
 	return *this;
 }
 

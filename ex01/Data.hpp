@@ -11,7 +11,7 @@ public:
 	Data();
 	Data(std::string , int );
 	Data(Data& );
-	Data& operator=(Data& );
+	Data& operator=(const Data& );
 
 	std::string	getString();
 	int			getNum();

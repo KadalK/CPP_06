@@ -1,8 +1,8 @@
 #include "Data.hpp"
 
-Data::Data() {}
+Data::Data() : _string(""), _num(0) {}
 
-Data::Data(std::string str, int n): string(str), num(n) {}
+Data::Data(std::string str, int n): _string(str), _num(n) {}
 
 Data::Data(Data& copy) {
 	*this = copy;
@@ -16,11 +16,11 @@ Data& Data::operator=(const Data& rhs) {
 
 std::string Data::getString()
 {
-	return (this->string);
+	return (this->_string);
 }
 
 int	Data::getNum(){
-	return (this->num);
+	return (this->_num);
 }
 
 Data::~Data() {}

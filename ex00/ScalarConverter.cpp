@@ -1,8 +1,8 @@
 #include "ScalarConverter.hpp"
+#include "isCheck.hpp"
 #include <iostream>
 #include <iomanip>
-#include <limits>
-#include <cmath>
+#include <limits.h>
 
 ScalarConverter::ScalarConverter() {}
 
@@ -11,93 +11,171 @@ ScalarConverter::ScalarConverter(ScalarConverter& copy) {
 }
 
 ScalarConverter& ScalarConverter::operator=(const ScalarConverter& rhs){
+	(void)rhs;
 	return *this;
 }
 
-void	charConvert(std:: string type, int toInt){
 
-		std::cout << "char: '" << type.c_str()[0] << "'" <<std::endl;
-		std::cout << "int: " << toInt << std::endl;
-		std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float>(toInt) << "f" << std::endl;
-		std::cout << "double: " << static_cast<double>(toInt) << std::endl;
-}
+bool hasFloatSuffix(const std::string& str);
+bool isSpecial(const std::string& str);
 
 
-void	stringCharConvert(char *endPtr, double res){
-	if (!*endPtr && (res >= std::numeric_limits<unsigned char>::min() && res <= std::numeric_limits<unsigned char>::max()))
-	{
-		if (res >= 32 && res < 127)
-			std::cout << "char: '" << static_cast<char>(res) << "'" << std::endl;
-		else
-			std::cout << "char: Non displayable " << std::endl;
-	}
-	else
-		std::cout << "char: impossible " << std::endl;
-}
-
-void	stringIntConvert(char *endPtr, double res)
+//CHAR
+void charConvert(std::string str)
 {
-	if (!*endPtr && (res >= std::numeric_limits<int>::min() && res <= std::numeric_limits<int>::max()))
-		std::cout << "int: " << static_cast<int>(res) << std::endl;
+	char c;
+
+	if (str.length() == 1 && !isdigit(str[0]))
+		c = str[0];
 	else
-		std::cout << "int: impossible " << std::endl;
+	{
+		int value;
+		std::stringstream ss(str);
+
+		ss >> value;
+
+		if (ss.fail() || !ss.eof())
+		{
+			std::cout << "char: impossible" << std::endl;
+			return;
+		}
+
+		if (value < 0 || value > 127)
+		{
+			std::cout << "char: impossible" << std::endl;
+			return;
+		}
+		c = static_cast<char>(value);
+	}
+
+	if (!isprint(c))
+		std::cout << "char: Non displayable" << std::endl;
+	else
+		std::cout << "char: '" << c << "'" << std::endl;
 }
 
-void	stringFloatConvert(char *endPtr, double res, std::string type){
-	float	conv;
-	std::string tmp = type;
-	conv = std::strtof(tmp.c_str(), &endPtr);
-	if (std::strtof(tmp.c_str(), &endPtr))
+//INT
+void intConvert(std::string str)
+{
+	if (isSpecial(str))
 	{
-		std::cout << "float: " << conv << "f" << std::endl;
+		std::cout << "int: impossible" << std::endl;
 		return;
 	}
-	if (!*endPtr && (res >= -std::numeric_limits<float>::max() && res <= std::numeric_limits<float>::max()))
-		std::cout << "float: " << static_cast<float>(res) << "f" << std::endl;
-	else
-		std::cout << "float: impossible " << std::endl;
+
+	std::string clean = str;
+
+	if (hasFloatSuffix(clean))
+		clean = clean.substr(0, clean.length() - 1);
+
+	std::stringstream ss(clean);
+	double value;
+
+	ss >> value;
+
+	if (ss.fail() || !ss.eof())
+	{
+		std::cout << "int: impossible" << std::endl;
+		return;
+	}
+
+	if (value > INT_MAX || value < INT_MIN)
+	{
+		std::cout << "int: impossible" << std::endl;
+		return;
+	}
+
+	if (value != static_cast<int>(value))
+	{
+		std::cout << "int: impossible" << std::endl;
+		return;
+	}
+
+	std::cout << "int: " << static_cast<int>(value) << std::endl;
 }
 
-void	stringDoubleConvert(char *endPtr, double res, std::string type){
-	if (res == strtod("+inf", NULL) || res == strtod("-inf", NULL) || type == "nan" || type == "nanf")
-		std::cout << "double: " << res << std::endl;
-	else if (!*endPtr && (res >= std::numeric_limits<double>::min() && res <= std::numeric_limits<double>::max()))
-		std::cout << "double: " << static_cast<double>(res) << std::endl;
-	else
-		std::cout << "double: " << " impossible " << std::endl;
+//FLOAT
+void floatConvert(std::string str)
+{
+
+	if (isSpecial(str))
+	{
+		if (isSpecialFloat(str))
+		{
+			std::cout << "float: " << str << std::endl;
+		}
+		else
+		{
+			std::cout << "float: " << str << "f" <<std::endl;
+		}
+		return;
+	}
+
+	if (hasFloatSuffix(str))
+		str = str.substr(0, str.length() - 1);
+
+	std::stringstream ss(str);
+	float value;
+
+	ss >> value;
+
+	if (ss.fail() || !ss.eof())
+	{
+		std::cout << "float: impossible" << std::endl;
+		return;
+	}
+
+	std::cout << "float: " << value;
+
+	if (value == static_cast<int>(value))
+		std::cout << ".0";
+
+	std::cout << "f" << std::endl;
 }
 
-void	setFlag(char *endPtr, double res){
-	bool precisionFlag = false;
-	if (*endPtr == 'f' && !endPtr[1])
-		*endPtr = 0;
-	if (std::floor(res) == res)
-		precisionFlag = true;
-	if (precisionFlag)
-		std::cout << std::fixed << std::setprecision(1);
+//DOUBLE
+void	doubleConvert(std::string str){
+	if (isSpecial(str))
+	{
+		if (!isSpecialFloat(str))
+		{
+			std::cout << "double: " << str << std::endl;
+		}
+		else
+		{
+			std::string clean = str;
+			clean = clean.substr(0, str.length() - 1);
+			std::cout << "double: " << clean << std::endl;
+		}
+		return;
+	}
+
+	std::stringstream ss(str);
+	double value;
+	long long n;
+
+	ss >> value;
+	n = value;
+
+	if (ss.fail() || !ss.eof())
+	{
+		std::cout << "double: impossible" << std::endl;
+		return;
+	}
+
+	if (value -  n < 0.09f)
+	{
+		std::cout << "double: " << value << ".0" << std::endl;
+		return;
+	}
+	std::cout << "double: " << value << std::endl;
 }
 
-void	stringConvert(std::string type, double res){
-	char *endPtr;
-
-	res = std::strtod(type.c_str(), &endPtr);
-	if (type != "nan" && type != "nanf")
-		setFlag(endPtr, res);
-	stringCharConvert(endPtr, res);
-	stringIntConvert(endPtr, res);
-	stringFloatConvert(endPtr, res, type);
-	stringDoubleConvert(endPtr, res, type);
-}
-
-void	ScalarConverter::convert(std::string type){
-	int		toInt = 0;
-	double	res = 0;
-
-	toInt = static_cast<int>(type.c_str()[0]);
-	if (type.length() == 1)
-		charConvert(type, toInt);
-	else
-		stringConvert(type, res);
+void ScalarConverter::convert(std::string str){
+	charConvert(str);
+	intConvert(str);
+	floatConvert(str);
+	doubleConvert(str);
 }
 
 ScalarConverter::~ScalarConverter(){}

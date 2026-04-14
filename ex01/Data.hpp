@@ -5,8 +5,8 @@
 
 class Data{
 private:
-	std::string	string;
-	int			num;
+	std::string	_string;
+	int			_num;
 public:
 	Data();
 	Data(std::string , int );

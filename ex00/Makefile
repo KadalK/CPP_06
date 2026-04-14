@@ -2,8 +2,8 @@ NAME = Scalar
 CPP= c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRCS = main.cpp ScalarConverter.cpp
-INCS = ScalarConverter.hpp
+SRCS = main.cpp ScalarConverter.cpp isCheck.cpp
+INCS = ScalarConverter.hpp isCheck.hpp
 
 $(NAME): $(SRCS) $(INCS) Makefile
 	$(CPP) $(CFLAGS) $(SRCS) -o $(NAME)

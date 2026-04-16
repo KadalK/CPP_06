@@ -7,16 +7,16 @@
 class Data;
 
 class Serializer{
-public:
+private:
 	Serializer();
 	Serializer(Serializer& );
 	Serializer& operator=(Serializer& );
-
+	~Serializer();
+public:
 
 	static uintptr_t serialize(Data* ptr);
 	static Data* deserialize(uintptr_t raw);
 
-	~Serializer();
 };
 
 #endif

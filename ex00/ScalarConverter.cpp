@@ -43,13 +43,9 @@ void charConvert(std::string str)
 	}
 
 	if (!isprint(c))
-	{
 		std::cout << "char: Non displayable" << std::endl;
-	}
 	else
-	{
 		std::cout << "char: '" << c << "'" << std::endl;
-	}
 }
 
 //INT
@@ -99,13 +95,9 @@ void floatConvert(std::string str)
 	if (isSpecial(str))
 	{
 		if (isSpecialFloat(str))
-		{
 			std::cout << "float: " << str << std::endl;
-		}
 		else
-		{
 			std::cout << "float: " << str << "f" <<std::endl;
-		}
 		return;
 	}
 
@@ -136,9 +128,7 @@ void	doubleConvert(std::string str){
 	if (isSpecial(str))
 	{
 		if (!isSpecialFloat(str))
-		{
 			std::cout << "double: " << str << std::endl;
-		}
 		else
 		{
 			std::string clean = str;

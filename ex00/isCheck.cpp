@@ -29,7 +29,7 @@ bool isNaN(const std::string& str)
 
 bool isInf(const std::string& str)
 {
-	return (str == "inf" || str == "+inf" || isInfFloat(str));
+	return (str == "-inf" || str == "inf" || str == "+inf" || isInfFloat(str));
 }
 
 bool isSpecial(const std::string& str)

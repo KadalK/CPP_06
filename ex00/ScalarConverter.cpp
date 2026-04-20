@@ -34,12 +34,6 @@ void charConvert(std::string str)
 
 		ss >> value;
 
-		if (ss.fail() || !ss.eof())
-		{
-			std::cout << "char: impossible" << std::endl;
-			return;
-		}
-
 		if (value < 0 || value > 127)
 		{
 			std::cout << "char: impossible" << std::endl;
@@ -49,9 +43,13 @@ void charConvert(std::string str)
 	}
 
 	if (!isprint(c))
+	{
 		std::cout << "char: Non displayable" << std::endl;
+	}
 	else
+	{
 		std::cout << "char: '" << c << "'" << std::endl;
+	}
 }
 
 //INT
@@ -157,15 +155,28 @@ void	doubleConvert(std::string str){
 	ss >> value;
 	n = value;
 
+	if (hasFloatSuffix(str) && str[str.length() - 2] != 'f')
+	{
+
+		if (value - n < 0.09f && str[str.length() - 2] == '0')
+		{
+			std::cout << "double: " << value << ".0" << std::endl;
+			return;
+		}
+		std::cout << "double: " << value << std::endl;
+		return;
+	}
+
+
 	if (ss.fail() || !ss.eof())
 	{
 		std::cout << "double: impossible" << std::endl;
 		return;
 	}
 
-	if (value -  n < 0.09f)
+	if (value -  n < 0.09f  || value == static_cast<int>(value))
 	{
-		std::cout << "double: " << value << ".0" << std::endl;
+		std::cout << "double: " << value <<  ".0" << std::endl;
 		return;
 	}
 	std::cout << "double: " << value << std::endl;

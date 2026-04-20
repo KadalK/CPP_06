@@ -5,16 +5,15 @@
 #include <exception>
 
 
-Base * generate(void){
+Base * generate(){
 	int i;
 	srand(time(0));
 	i = rand()%3;
 	if (i == 0)
 		return	new A();
-	else if (i == 1)
+	if (i == 1)
 		return	new B();
-	else
-		return	new C();
+	return	new C();
 }
 
 void identify(Base& p){

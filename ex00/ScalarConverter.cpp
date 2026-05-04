@@ -18,7 +18,6 @@ ScalarConverter& ScalarConverter::operator=(const ScalarConverter& rhs){
 }
 
 static void printer(const char& c, const int& n, const float& f, const double& d){
-
 	if (isdigit(c) || c < 0 || c > 127 )
 		std::cout << "char: impossible" << std::endl;
 	else if (!isprint(c))

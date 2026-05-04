@@ -2,7 +2,9 @@
 #include "isCheck.hpp"
 #include <iostream>
 #include <iomanip>
-#include <limits.h>
+
+bool hasFloatSuffix(const std::string& str);
+bool isSpecial(const std::string& str);
 
 ScalarConverter::ScalarConverter() {}
 
@@ -15,168 +17,90 @@ ScalarConverter& ScalarConverter::operator=(const ScalarConverter& rhs){
 	return *this;
 }
 
+static void printer(const char& c, const int& n, const float& f, const double& d){
 
-bool hasFloatSuffix(const std::string& str);
-bool isSpecial(const std::string& str);
-
-
-//CHAR
-void charConvert(std::string str)
-{
-	char c;
-
-	if (str.length() == 1 && !isdigit(str[0]))
-		c = str[0];
-	else
-	{
-		int value;
-		std::stringstream ss(str);
-
-		ss >> value;
-
-		if (value < 0 || value > 127)
-		{
-			std::cout << "char: impossible" << std::endl;
-			return;
-		}
-		c = static_cast<char>(value);
-	}
-
-	if (!isprint(c))
-		std::cout << "char: Non displayable" << std::endl;
+	if (isdigit(c) || c < 0 || c > 127 )
+		std::cout << "char: impossible" << std::endl;
+	else if (!isprint(c))
+		std::cout << "char: non displayable" << std::endl;
 	else
 		std::cout << "char: '" << c << "'" << std::endl;
+
+	std::cout << "int: " << n << std::endl;
+	if (n - d == 0 && d >= -100000 && d <= 100000)
+	{
+		std::cout << "float: " << f << ".0f" << std::endl;
+		std::cout << "double: " << d << ".0" << std::endl;
+	}
+	else
+	{
+		std::cout << "float: " << f << "f" << std::endl;
+		std::cout << "double: " << d << std::endl;
+	}
 }
 
-//INT
-void intConvert(std::string str)
-{
-	if (isSpecial(str))
-	{
-		std::cout << "int: impossible" << std::endl;
-		return;
-	}
+static bool isChar(const std::string& str){
+	const char c = str[0];
 
-	std::string clean = str;
+	if (str.length() > 1 || isdigit(c) || c < 0 || c > 127 )
+		return (false);
 
-	if (hasFloatSuffix(clean))
-		clean = clean.substr(0, clean.length() - 1);
-
-	std::stringstream ss(clean);
-	double value;
-
-	ss >> value;
-
-	if (ss.fail() || !ss.eof())
-	{
-		std::cout << "int: impossible" << std::endl;
-		return;
-	}
-
-	if (value > INT_MAX || value < INT_MIN)
-	{
-		std::cout << "int: impossible" << std::endl;
-		return;
-	}
-
-	if (value != static_cast<int>(value))
-	{
-		std::cout << "int: impossible" << std::endl;
-		return;
-	}
-
-	std::cout << "int: " << static_cast<int>(value) << std::endl;
+	const int n = static_cast<int>(c);
+	const float f = static_cast<float>(c);
+	const double d = static_cast<double>(c);
+	printer(c, n, f, d);
+	return (true);
 }
 
-//FLOAT
-void floatConvert(std::string str)
-{
-
-	if (isSpecial(str))
-	{
-		if (isSpecialFloat(str))
-			std::cout << "float: " << str << std::endl;
-		else
-			std::cout << "float: " << str << "f" <<std::endl;
-		return;
-	}
-
-	if (hasFloatSuffix(str))
-		str = str.substr(0, str.length() - 1);
-
+static bool isInt(const std::string& str){
 	std::stringstream ss(str);
-	float value;
+	int n;
 
-	ss >> value;
-
+	ss >> n;
 	if (ss.fail() || !ss.eof())
-	{
-		std::cout << "float: impossible" << std::endl;
-		return;
-	}
+		return (false);
+	const char c = static_cast<char>(n);
+	const float f = static_cast<float>(n);
+	const double d = static_cast<double>(n);
+	printer(c, n, f, d);
 
-	std::cout << "float: " << value;
-
-	if (value == static_cast<int>(value))
-		std::cout << ".0";
-
-	std::cout << "f" << std::endl;
+	return (true);
 }
 
-//DOUBLE
-void	doubleConvert(std::string str){
-	if (isSpecial(str))
-	{
-		if (!isSpecialFloat(str))
-			std::cout << "double: " << str << std::endl;
-		else
-		{
-			std::string clean = str;
-			clean = clean.substr(0, str.length() - 1);
-			std::cout << "double: " << clean << std::endl;
-		}
-		return;
-	}
+static bool isFloat(const std::string& str){
+	if (!hasFloatSuffix(str))
+		return (false);
+	std::stringstream ss(str.substr(0, str.length() - 1));
+	float f;
 
+	ss >> f;
+	if (ss.fail() || !ss.eof())
+		return (false);
+	const char c = static_cast<char>(f);
+	const int n = static_cast<int>(f);
+	const double d = static_cast<double>(f);
+	printer(c, n, f, d);
+
+	return (true);
+}
+
+static bool isDouble(const std::string& str){
 	std::stringstream ss(str);
-	double value;
-	long long n;
+	double d;
 
-	ss >> value;
-	n = value;
-
-	if (hasFloatSuffix(str) && str[str.length() - 2] != 'f')
-	{
-
-		if (value - n < 0.09f && str[str.length() - 2] == '0')
-		{
-			std::cout << "double: " << value << ".0" << std::endl;
-			return;
-		}
-		std::cout << "double: " << value << std::endl;
-		return;
-	}
-
-
+	ss >> d;
 	if (ss.fail() || !ss.eof())
-	{
-		std::cout << "double: impossible" << std::endl;
-		return;
-	}
+		return (false);
+	const char c = static_cast<char>(d);
+	const int n = static_cast<int>(d);
+	const float f = static_cast<float>(d);
+	printer(c, n, f, d);
 
-	if (value -  n < 0.09f  || value == static_cast<int>(value))
-	{
-		std::cout << "double: " << value <<  ".0" << std::endl;
-		return;
-	}
-	std::cout << "double: " << value << std::endl;
+	return (true);
 }
 
-void ScalarConverter::convert(std::string str){
-	charConvert(str);
-	intConvert(str);
-	floatConvert(str);
-	doubleConvert(str);
+void ScalarConverter::convert(const std::string& str){
+	isChar(str)|| isInt(str) || isFloat(str) || isDouble(str) || isSpecial(str);
 }
 
 ScalarConverter::~ScalarConverter(){}

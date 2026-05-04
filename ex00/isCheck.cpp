@@ -1,4 +1,5 @@
 #include "isCheck.hpp"
+#include <cstdlib>
 
 bool hasFloatSuffix(const std::string& str)
 {
@@ -34,5 +35,26 @@ bool isInf(const std::string& str)
 
 bool isSpecial(const std::string& str)
 {
-	return isNaN(str) || isInf(str);
+	if (isNaN(str) || isInf(str))
+	{
+		double d = std::atof(str.c_str());
+		float f = static_cast<float>(d);
+		std::cout << "char: impossible" << std::endl;
+		std::cout << "int: impossible" << std::endl;
+		std::cout << "float: " << f << "f" <<std::endl;
+		std::cout << "double: " << d << std::endl;
+		return(true);
+	}
+	if (isNaNFloat(str) || isInfFloat(str))
+	{
+		float f = std::atof(str.c_str());
+		double d = static_cast<double>(f);
+		std::cout << "char: impossible" << std::endl;
+		std::cout << "int: impossible" << std::endl;
+		std::cout << "float: " << f << "f" << std::endl;
+		std::cout << "double: " << d << std::endl;
+		return(true);
+	}
+
+	return(false);
 }
